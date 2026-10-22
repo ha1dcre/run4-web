@@ -553,3 +553,16 @@ if (grainCanvas) {
 import('./atmosphere.js').then(({ createAtmosphere }) => {
   createAtmosphere({ isPaused: () => paused, motionButton });
 }).catch(() => {}); // Static atmosphere is the offline/WebGL fallback.
+
+// Video manual: swap the local poster for the privacy-enhanced YouTube player only on press.
+const videoPlay = document.querySelector('.video-play');
+videoPlay?.addEventListener('click', () => {
+  const frame = document.createElement('iframe');
+  frame.src = `https://www.youtube-nocookie.com/embed/${videoPlay.dataset.video}?autoplay=1&rel=0`;
+  frame.title = 'RUN4 Video Manual — the complete guide';
+  frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+  frame.allowFullscreen = true;
+  frame.referrerPolicy = 'strict-origin-when-cross-origin';
+  videoPlay.replaceWith(frame);
+  frame.focus();
+});
